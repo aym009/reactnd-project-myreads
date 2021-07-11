@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
 
 const Dashboard = props => {
-  const { books } = props
+  const { books, updateBooks } = props
 
   return(
     <div className="list-books">
@@ -14,13 +14,16 @@ const Dashboard = props => {
         <div>
           <BookShelf
             title='Currently Reading'
-            books={books.filter((book) => book.shelf ==='currentlyReading')} />
+            books={books.filter((book) => book.shelf ==='currentlyReading')}
+            updateBooks={updateBooks} />
           <BookShelf
-            title='Want to Read'
-            books={books.filter((book) => book.shelf ==='wantToRead')} />
+            title='Want To Read'
+            books={books.filter((book) => book.shelf ==='wantToRead')}
+            updateBooks={updateBooks} />
           <BookShelf
             title='Read'
-            books={books.filter((book) => book.shelf ==='read')} />
+            books={books.filter((book) => book.shelf ==='read')}
+            updateBooks={updateBooks} />
         </div>
       </div>
       <div className="open-search">

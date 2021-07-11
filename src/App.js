@@ -19,13 +19,24 @@ class BooksApp extends React.Component {
       })
   }
 
+  updateBooks = (book, shelf) => {
+    book.shelf = shelf
+
+    this.setState((currentState) => ({
+      books: currentState.books.filter((item) => item.id !== book.item).concat([book])
+    }))
+    
+    BooksAPI.update(book, shelf)
+  }
+
   render() {
     const { books } = this.state
 
     return (
-      <div className="app">
+      <div className="app">{console.log(books)}
+        {console.log(this.state.books)}
         <Route exact path='/' render={() => (
-          <Dashboard books={books} />
+          <Dashboard books={books} updateBooks={this.updateBooks} />
         )} />
         <Route path='/search' component={SearchBooks} />
       </div>
