@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 
 class Book extends Component {
   handleChange = (e) => {
@@ -31,6 +32,11 @@ class Book extends Component {
       </li>
     )  
   }
+}
+
+Book.propTypes = {
+  book: propTypes.object,
+  onBookShelfChange: propTypes.func.isRequired
 }
 
 export default Book

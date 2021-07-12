@@ -4,7 +4,6 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchBooks from './SearchBooks'
 import Dashboard from './Dashboard'
-import Book from './Book'
 
 class BooksApp extends React.Component {
   state = {
