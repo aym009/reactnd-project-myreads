@@ -4,6 +4,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchBooks from './SearchBooks'
 import Dashboard from './Dashboard'
+import Book from './Book'
 
 class BooksApp extends React.Component {
   state = {
@@ -33,12 +34,13 @@ class BooksApp extends React.Component {
     const { books } = this.state
 
     return (
-      <div className="app">{console.log(books)}
-        {console.log(this.state.books)}
+      <div className="app">
         <Route exact path='/' render={() => (
           <Dashboard books={books} updateBooks={this.updateBooks} />
         )} />
-        <Route path='/search' component={SearchBooks} />
+        <Route path='/search' render={() => (
+          <SearchBooks updateBooks={this.updateBooks} />
+        )} />
       </div>
     )
   }
