@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
-import Dashboard from './Dashboard'
 import Book from './Book'
 
 class SearchBooks extends Component {
@@ -16,21 +15,31 @@ class SearchBooks extends Component {
       searchQuery: e.target.value
     })
 
-    this.searchBooks(this.state.searchQuery)
+    this.searchBooks(e.target.value)
   }
 
   searchBooks = (query) => {
-    if (this.state.searchQuery.length > 1) {
-      BooksAPI.search(query)
+    const trimedQuery = query.trim()
+
+    if (trimedQuery.length > 1) {
+      BooksAPI.search(trimedQuery)
         .then((results) => {
+          results.map((resultBook) => {
+            const bookInShelf = this.props.books.find(book => book.id === resultBook.id)
+            resultBook.shelf = bookInShelf ? bookInShelf.shelf : 'none'
+
+            return resultBook
+          })
           this.setState(() => ({
             results
           }))
         })
-    } else {
-      this.setState(() => ({
-        results: []
-      }))
+        .catch(err => {
+          this.setState({
+            results: [],
+            error: 'There is an error for searching.'
+          })
+        })
     }
   }
 
@@ -39,6 +48,8 @@ class SearchBooks extends Component {
   }
 
   render() {
+    const { searchQuery, results, error } = this.state
+
     return(
       <div className="search-books">
         <div className="search-books-bar">
@@ -52,17 +63,15 @@ class SearchBooks extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" value={this.state.searchQuery} onChange={this.handleInputChange} placeholder="Search by title or author"/>
+            <input type="text" value={searchQuery} onChange={this.handleInputChange} placeholder="Search by title or author"/>
           </div>
         </div>
-        {this.state.searchQuery.length < 1 && <div style={{ paddingTop: 80 }}>
-          <Dashboard books={this.props.books} updateBooks={this.props.updateBooks} />
-        </div>}
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.results.map((book) => (
-              <Book key={book.id} book={book} onBookShelfChange={this.handleUpdateBookShelf} />
-            ))}
+            {results.length
+              ? results.map((book) => (
+                <Book key={book.id} book={book} onBookShelfChange={this.handleUpdateBookShelf} />
+              )): error && <p>There is an error for searching</p>}
           </ol>
         </div>
       </div>
