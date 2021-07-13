@@ -5,6 +5,8 @@ import BookShelf from './BookShelf'
 
 const Dashboard = props => {
   const { books, updateBooks } = props
+  const filter = books => shelf => books.filter(book => book.shelf === shelf)
+  const filterBy = filter(books)
   const isSearchPage = document.location.pathname === '/search' ? true : false
 
   return(
@@ -16,15 +18,15 @@ const Dashboard = props => {
         <div>
           <BookShelf
             title='Currently Reading'
-            books={books.filter((book) => book.shelf ==='currentlyReading')}
+            books={filterBy('currentlyReading')}
             updateBooks={updateBooks} />
           <BookShelf
             title='Want To Read'
-            books={books.filter((book) => book.shelf ==='wantToRead')}
+            books={filterBy('wantToRead')}
             updateBooks={updateBooks} />
           <BookShelf
             title='Read'
-            books={books.filter((book) => book.shelf ==='read')}
+            books={filterBy('read')}
             updateBooks={updateBooks} />
         </div>
       </div>
