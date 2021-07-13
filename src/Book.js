@@ -13,12 +13,15 @@ class Book extends Component {
 
   render() {
     const { book } = this.props
+    const bookImage = book.imageLinks ? book.imageLinks['thumbnail'] : ''
 
     return(
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks['thumbnail']})` }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookImage})` }}>
+              {!bookImage && <span style={{ display: 'inline-block', textAlign: 'center', padding: 10 }}>No Image Available</span>}
+            </div>
             <div className="book-shelf-changer">
               <select onChange={this.handleChange} defaultValue={this.props.book.shelf}>
                 <option value="move" disabled>Move to...</option>
