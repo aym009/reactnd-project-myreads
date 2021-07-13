@@ -38,7 +38,7 @@ class BooksApp extends React.Component {
           <Dashboard books={books} updateBooks={this.updateBooks} />
         )} />
         <Route path='/search' render={() => (
-          <SearchBooks updateBooks={this.updateBooks} />
+          <SearchBooks books={books} updateBooks={this.updateBooks} />
         )} />
       </div>
     )

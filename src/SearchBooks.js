@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
+import Dashboard from './Dashboard'
 import Book from './Book'
 
 class SearchBooks extends Component {
@@ -26,6 +27,10 @@ class SearchBooks extends Component {
             results
           }))
         })
+    } else {
+      this.setState(() => ({
+        results: []
+      }))
     }
   }
 
@@ -50,6 +55,9 @@ class SearchBooks extends Component {
             <input type="text" value={this.state.searchQuery} onChange={this.handleInputChange} placeholder="Search by title or author"/>
           </div>
         </div>
+        {this.state.searchQuery.length < 1 && <div style={{ paddingTop: 80 }}>
+          <Dashboard books={this.props.books} updateBooks={this.props.updateBooks} />
+        </div>}
         <div className="search-books-results">
           <ol className="books-grid">
             {this.state.results.map((book) => (

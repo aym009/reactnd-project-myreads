@@ -14,6 +14,7 @@ class Book extends Component {
   render() {
     const { book } = this.props
     const bookImage = book.imageLinks ? book.imageLinks['thumbnail'] : ''
+    const defaultShelfValue = book.shelf ? book.shelf : 'none'
 
     return(
       <li>
@@ -23,7 +24,7 @@ class Book extends Component {
               {!bookImage && <span style={{ display: 'inline-block', textAlign: 'center', padding: 10 }}>No Image Available</span>}
             </div>
             <div className="book-shelf-changer">
-              <select onChange={this.handleChange} defaultValue={this.props.book.shelf}>
+              <select onChange={this.handleChange} defaultValue={defaultShelfValue}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -34,7 +35,7 @@ class Book extends Component {
           </div>
           <div className="book-title">{book.title}</div>
           <div className="book-authors">
-            {book.authors.map((author) => <span key={author} style={{ display: 'block' }}>{author}</span>)}
+            {book.authors && book.authors.map((author) => <span key={author} style={{ display: 'block' }}>{author}</span>)}
           </div>
         </div>
       </li>
