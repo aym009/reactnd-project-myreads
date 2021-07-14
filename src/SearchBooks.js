@@ -21,7 +21,7 @@ class SearchBooks extends Component {
   searchBooks = (query) => {
     const trimedQuery = query.trim()
 
-    if (trimedQuery.length > 1) {
+    if (trimedQuery.length > 0) {
       BooksAPI.search(trimedQuery)
         .then((results) => {
           results.map((resultBook) => {
@@ -40,6 +40,10 @@ class SearchBooks extends Component {
             error: 'There is an error for searching.'
           })
         })
+    } else {
+      this.setState(() => ({
+        results: []
+      }))
     }
   }
 
