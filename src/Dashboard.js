@@ -7,7 +7,6 @@ const Dashboard = props => {
   const { books, updateBooks } = props
   const filter = books => shelf => books.filter(book => book.shelf === shelf)
   const filterBy = filter(books)
-  const isSearchPage = document.location.pathname === '/search' ? true : false
 
   return(
     <div className="list-books">
@@ -30,9 +29,9 @@ const Dashboard = props => {
             updateBooks={updateBooks} />
         </div>
       </div>
-      {!isSearchPage && <div className="open-search">
+      <div className="open-search">
         <Link to='/search'>Add a book</Link>
-      </div>}
+      </div>
     </div>
   )
 }
